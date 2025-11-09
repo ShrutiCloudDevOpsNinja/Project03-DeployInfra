@@ -78,7 +78,7 @@ stages:
   dependsOn: MainBranchMerge_TerraformInit
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   jobs:
-  - job: Main_Approval-Init-Plan
+  - job: Main_Approval_Init_Plan
     # pool: server
     steps:
     # Manual Validation
@@ -151,7 +151,7 @@ stages:
   dependsOn: FeatureBranchMerge_TerraformInit
   condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')
   jobs:
-  - job: Feature_Init-Validate
+  - job: Feature_Init_Validate
     steps:
 
     # Terraform INSTALL
@@ -257,7 +257,7 @@ stages:
   dependsOn: FeatureBranchMerge_Approval
   condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')
   jobs:
-  - job: Feature_Init-Fmt
+  - job: Feature_Init_Fmt
     steps:
     # Terraform INSTALL
     - task: TerraformInstaller@1
