@@ -62,11 +62,11 @@ stages:
   jobs:
   - job: Plan
     steps:
-    # # Terraform INSTALL
-    # - task: TerraformInstaller@1
-    #   displayName: 'Task: terraform install'
-    #   inputs:
-    #     terraformVersion: 'latest'
+    # Terraform INSTALL
+    - task: TerraformInstaller@1
+      displayName: 'Task: terraform install'
+      inputs:
+        terraformVersion: 'latest'
         
     # - script: |
     #     echo "##vso[task.prependpath]/opt/hostedtoolcache/terraform/1.13.5/x64"
@@ -107,11 +107,11 @@ stages:
   - job: Init
     steps:
 
-    # # Terraform INSTALL
-    # - task: TerraformInstaller@1
-    #   displayName: 'Task: terraform install'
-    #   inputs:
-    #     terraformVersion: 'latest'
+    # Terraform INSTALL
+    - task: TerraformInstaller@1
+      displayName: 'Task: terraform install'
+      inputs:
+        terraformVersion: 'latest'
 
     # Terraform INIT
     - task: TerraformTaskV4@4
@@ -135,11 +135,11 @@ stages:
   - job: Validate
     steps:
 
-    # # Terraform INSTALL
-    # - task: TerraformInstaller@1
-    #   displayName: 'Task: terraform install'
-    #   inputs:
-    #     terraformVersion: 'latest'
+    # Terraform INSTALL
+    - task: TerraformInstaller@1
+      displayName: 'Task: terraform install'
+      inputs:
+        terraformVersion: 'latest'
 
     # Terraform INIT
     - task: TerraformTaskV4@4
@@ -184,11 +184,11 @@ stages:
   - job: Fmt
     steps:
 
-    # # Terraform INSTALL
-    # - task: TerraformInstaller@1
-    #   displayName: 'Task: terraform install'
-    #   inputs:
-    #     terraformVersion: 'latest'
+    # Terraform INSTALL
+    - task: TerraformInstaller@1
+      displayName: 'Task: terraform install'
+      inputs:
+        terraformVersion: 'latest'
 
     # Terraform INIT
     - task: TerraformTaskV4@4
