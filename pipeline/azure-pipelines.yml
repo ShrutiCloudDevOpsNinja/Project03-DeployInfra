@@ -26,6 +26,9 @@ variables:
 
 - name: varbackendAzureRmStorageAccountName
   value: ankur01storage01ac01
+  
+- group: Project02-VariableGroup-Dev
+- group: Project02-VariableGroup-Staging
 
 # Selected values based on parameter: dev or staging
 - name: selected_service_connection
