@@ -246,25 +246,24 @@ stages:
         echo "Running Trivy Terraform config scan..."
         cd ${{ variables.varWorkingDirectory }}
         
-        # Check if any .tfvars file exists
         tfvars_file=$(find . -maxdepth 1 -name "*.tfvars" | head -n 1)
         if [ -n "$tfvars_file" ]; then
           echo "Using tfvars file: $tfvars_file"
           trivy config --tfvars "$tfvars_file" \
-                       --severity HIGH,CRITICAL \
-                       --format json \
-                       --output ../trivy-report.json .
+                      --severity HIGH,CRITICAL \
+                      --format json \
+                      --output trivy-report.json .
         else
           echo "No tfvars file found. Running without tfvars..."
           trivy config --severity HIGH,CRITICAL \
-                       --format json \
-                       --output ../trivy-report.json .
+                      --format json \
+                      --output trivy-report.json .
         fi
 
         echo "Trivy scan complete. JSON report generated."
       displayName: "Run Trivy Config Scan"
 
-    # Publish Trivy Report as Artifact
+    # Publish Trivy Report
     - publish: ${{ variables.varWorkingDirectory }}/trivy-report.json
       artifact: TrivyReport_${{ parameters.environment }}
 
