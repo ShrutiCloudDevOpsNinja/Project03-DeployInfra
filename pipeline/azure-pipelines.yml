@@ -207,3 +207,5 @@ stages:
         customCommand: 'fmt'
         workingDirectory: '$(selectedVG_varworkingDirectory)'
         environmentServiceNameAzureRM: '$(selected_service_connection)'
+
+        
