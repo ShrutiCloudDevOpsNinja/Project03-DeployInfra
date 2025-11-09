@@ -79,7 +79,7 @@ stages:
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   jobs:
   - job: Main_Approval_Init_Plan
-    # pool: server
+    pool: server   # ✅ REQUIRED for ManualValidation
     steps:
     # Manual Validation
     - task: ManualValidation@0
@@ -244,7 +244,7 @@ stages:
   condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')
   jobs:
   - job: Feature_Approval
-    # pool: server
+    pool: server   # ✅ REQUIRED for ManualValidation
     steps:
     - task: ManualValidation@0
       inputs:
