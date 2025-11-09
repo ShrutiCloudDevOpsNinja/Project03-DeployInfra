@@ -210,12 +210,11 @@ stages:
         tflint --version
       displayName: "Install TFLint"
 
-    # Initialize and Run TFLint
+    # Run TFLint
     - script: |
         echo "Running TFLint..."
         cd ${{ variables.varWorkingDirectory }}
         tflint --init
-        # Optional: You can specify config file if you have one, e.g., --config=../.tflint.hcl
         tflint --recursive --enable-rule=terraform_required_providers
       displayName: "Run TFLint Analysis"
 
@@ -223,11 +222,11 @@ stages:
     - script: |
         cd ${{ variables.varWorkingDirectory }}
         echo "Generating TFLint JSON report..."
-        tflint --format json > ../tflint-report.json || true
-      displayName: "Generate Scan Reports"
+        tflint --format json > $(System.DefaultWorkingDirectory)/tflint-report.json || true
+      displayName: "Generate TFLint Report"
 
     # Publish Report Artifact
-    - publish: tflint-report.json
+    - publish: $(System.DefaultWorkingDirectory)/tflint-report.json
       artifact: TFLintReport_${{ parameters.environment }}
 
     # Install Trivy
@@ -245,19 +244,18 @@ stages:
     - script: |
         echo "Running Trivy Terraform security scan..."
         cd ${{ variables.varWorkingDirectory }}
-        # Check for tfvars file
         tfvars_file=$(find . -maxdepth 1 -name "*.tfvars" | head -n 1)
         if [ -n "$tfvars_file" ]; then
           echo "Using tfvars file: $tfvars_file"
-          trivy config --severity HIGH,CRITICAL --tfvars "$tfvars_file" --format json --output trivy-report.json .
+          trivy config --severity HIGH,CRITICAL --tfvars "$tfvars_file" --format json --output $(System.DefaultWorkingDirectory)/trivy-report.json .
         else
           echo "No tfvars file found. Running scan without tfvars..."
-          trivy config --severity HIGH,CRITICAL --format json --output trivy-report.json .
+          trivy config --severity HIGH,CRITICAL --format json --output $(System.DefaultWorkingDirectory)/trivy-report.json .
         fi
       displayName: "Run Trivy Config Scan"
 
     # Publish Trivy Report as Artifact
-    - publish: trivy-report.json
+    - publish: $(System.DefaultWorkingDirectory)/trivy-report.json
       artifact: TrivyReport_${{ parameters.environment }}
 
 
