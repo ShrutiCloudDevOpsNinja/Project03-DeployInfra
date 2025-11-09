@@ -27,6 +27,9 @@ variables:
 - name: varbackendAzureRmStorageAccountName
   value: ankur01storage01ac01
 
+- name: varWorkingDirectory
+  value: '$(System.DefaultWorkingDirectory)/infra/dev'
+
 - group: Project02-VariableGroup-Dev
 - group: Project02-VariableGroup-Staging
 
@@ -82,7 +85,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/infra/dev'
+        workingDirectory: '$(variable.varWorkingDirectory)'
         backendServiceArm: 'ServiceConnection-09NOV2025'
         backendAzureRmResourceGroupName: 'ankurbackend01'
         backendAzureRmStorageAccountName: 'ankur01storage01ac01'
