@@ -79,12 +79,25 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        workingDirectory: '$(selectedVG_varworkingDirectory)'
-        backendServiceArm: '$(selected_service_connection)'
-        backendAzureRmResourceGroupName: '$(varbackendAzureRmResourceGroupName)'
-        backendAzureRmStorageAccountName: '$(varbackendAzureRmStorageAccountName)'
-        backendAzureRmContainerName: '$(selectedVG_varbackendAzureRmContainerName)'
-        backendAzureRmKey: '$(selectedVG_varbackendAzureRmKey)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/infra/dev'
+        backendServiceArm: 'ServiceConnection-09NOV2025'
+        backendAzureRmResourceGroupName: 'ankurbackend01'
+        backendAzureRmStorageAccountName: 'ankur01storage01ac01'
+        backendAzureRmContainerName: 'ankurstorage01container01'
+        backendAzureRmKey: 'Project02-VG-Dev.terraform.tfstate'
+
+    # # Terraform INIT
+    # - task: TerraformTaskV4@4
+    #   displayName: 'Task: terraform init'
+    #   inputs:
+    #     provider: 'azurerm'
+    #     command: 'init'
+    #     workingDirectory: '$(selectedVG_varworkingDirectory)'
+    #     backendServiceArm: '$(selected_service_connection)'
+    #     backendAzureRmResourceGroupName: '$(varbackendAzureRmResourceGroupName)'
+    #     backendAzureRmStorageAccountName: '$(varbackendAzureRmStorageAccountName)'
+    #     backendAzureRmContainerName: '$(selectedVG_varbackendAzureRmContainerName)'
+    #     backendAzureRmKey: '$(selectedVG_varbackendAzureRmKey)'
 
     # Terraform PLAN
     - task: TerraformTaskV4@4
@@ -122,7 +135,7 @@ stages:
         workingDirectory: '$(selectedVG_varworkingDirectory)'
         backendServiceArm: '$(selected_service_connection)'
         backendAzureRmResourceGroupName: '$(varbackendAzureRmResourceGroupName)'
-        backendAzureRmStorageAccountName: '$(varbackendAzureRmStorageAccountName)'
+        backendAzureRmStorageAccountName: 'ankurbackend01'
         backendAzureRmContainerName: '$(selectedVG_varbackendAzureRmContainerName)'
         backendAzureRmKey: '$(selectedVG_varbackendAzureRmKey)'
 
