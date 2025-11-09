@@ -264,8 +264,8 @@ stages:
         echo "Trivy scan complete. JSON report generated."
       displayName: "Run Trivy Config Scan"
 
-    # Publish Trivy Report Artifact
-    - publish: trivy-report.json
+    # Publish Trivy Report as Artifact
+    - publish: ${{ variables.varWorkingDirectory }}/trivy-report.json
       artifact: TrivyReport_${{ parameters.environment }}
 
 - stage: FeatureBranchMerge_Approval
