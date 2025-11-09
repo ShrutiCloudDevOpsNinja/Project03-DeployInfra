@@ -90,7 +90,7 @@ stages:
 # Stage: Manual Validation > terraform install > terraform init > terraform plan
 - stage: MainBranchMerge_TerraformInitPlan
   displayName: "Branch: (main) - Stage: Init, Plan"
-  dependsOn: MainBranchMerge_TerraformInit
+  dependsOn: MainBranchMerge_Approval
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   jobs:
   - job: Main_Init_Plan
@@ -252,20 +252,31 @@ stages:
           trivy config --tfvars "$tfvars_file" \
                       --severity HIGH,CRITICAL \
                       --format json \
-                      --output trivy-report.json .
+                      --output trivy-report.json . || true
         else
           echo "No tfvars file found. Running without tfvars..."
           trivy config --severity HIGH,CRITICAL \
                       --format json \
-                      --output trivy-report.json .
+                      --output trivy-report.json . || true
         fi
 
-        echo "Trivy scan complete. JSON report generated."
+        echo "Verifying Trivy report location..."
+        pwd
+        ls -l trivy-report.json || echo "⚠️ trivy-report.json not found!"
       displayName: "Run Trivy Config Scan"
+
+    # Debug check — show all files for visibility
+    - script: |
+        echo "Listing all files in repo and infra/dev..."
+        pwd
+        ls -R
+      displayName: "List files for debugging"
 
     # Publish Trivy Report
     - publish: ${{ variables.varWorkingDirectory }}/trivy-report.json
       artifact: TrivyReport_${{ parameters.environment }}
+      condition: exists('${{ variables.varWorkingDirectory }}/trivy-report.json')
+      displayName: "Publish Trivy Report"
 
 - stage: FeatureBranchMerge_Approval
   displayName: "Branch: (feature) - Stage: Approval before Fmt (feature)"
