@@ -191,7 +191,7 @@ stages:
 
 - stage: FeatureBranchMerge_TerraformLintAndSecurity
   displayName: "Stage: TFLint and TFsec Scan"
-  dependsOn: FeatureBranchMerge_TerraformValidate
+  dependsOn: FeatureBranchMerge_TerraformInitValidate
   condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')
   jobs:
   - job: LintAndSecurity
